@@ -6,7 +6,7 @@
 /*   By: vgoncalv <vgoncalv@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 22:28:06 by vgoncalv          #+#    #+#             */
-/*   Updated: 2023/02/06 13:59:08 by vgoncalv         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:23:18 by vgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,17 @@
 static void	init_simulation(t_simulation *rcast)
 {
 	memset(rcast, 0, sizeof(t_simulation));
-	rcast->map = calloc(5, sizeof(char *));
-	rcast->map[0] = strdup("11111");
-	rcast->map[1] = strdup("10001");
-	rcast->map[2] = strdup("10001");
-	rcast->map[3] = strdup("10001");
-	rcast->map[4] = strdup("11111");
+	rcast->map = calloc(10, sizeof(char *));
+	rcast->map[0] = strdup("1111111111");
+	rcast->map[1] = strdup("1000000011");
+	rcast->map[2] = strdup("1000011001");
+	rcast->map[3] = strdup("1000000001");
+	rcast->map[4] = strdup("1000001011");
+	rcast->map[5] = strdup("1000011001");
+	rcast->map[6] = strdup("1010000001");
+	rcast->map[7] = strdup("1000011001");
+	rcast->map[8] = strdup("1010100001");
+	rcast->map[9] = strdup("1111111111");
 	rcast->player.fov = 60;
 	rcast->player.fov = rcast->player.fov / 2;
 	rcast->player.angle = 0;
