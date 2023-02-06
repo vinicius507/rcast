@@ -6,7 +6,7 @@ LIBS		=	-lmlx -lX11 -lXext -lm
 
 RM			=	rm -rf
 
-SRCS 		:= main.c image.c screen.c render.c
+SRCS 		:= main.c image.c screen.c colors.c raycast.c render.c
 SRCS		:= $(addprefix src/,$(SRCS))
 OBJS		=	${SRCS:%.c=$(OBJS_DIR)%.o}
 OBJS_DIR	=	build/

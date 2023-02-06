@@ -6,7 +6,7 @@
 /*   By: vgoncalv <vgoncalv@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 09:51:35 by vgoncalv          #+#    #+#             */
-/*   Updated: 2023/02/06 10:11:57 by vgoncalv         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:59:54 by vgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-void	fill(t_img *img, t_color color)
-{
-	int	x;
-	int	y;
-	int	pixels;
-
-	pixels = SCREEN_WIDTH * SCREEN_HEIGHT;
-	while (pixels--)
-	{
-		x = pixels % SCREEN_WIDTH;
-		y = pixels / SCREEN_WIDTH;
-		pixel_put(img, x, y, color);
-	}
-}
-
-t_screen	load_mlx(void)
+t_screen	init_screen(void)
 {
 	t_screen	screen;
 
@@ -50,17 +35,25 @@ t_screen	load_mlx(void)
 	return (screen);
 }
 
-static int	kill_screen(t_screen *screen)
+static int	kill_screen(t_simulation *rcast)
 {
+	t_screen	*screen;
+
+	screen = &rcast->screen;
 	mlx_destroy_image(screen->mlx, screen->buffer.ptr);
 	mlx_destroy_window(screen->mlx, screen->window);
 	mlx_destroy_display(screen->mlx);
 	free(screen->mlx);
+	free(rcast->map[0]);
+	free(rcast->map[1]);
+	free(rcast->map[3]);
+	free(rcast->map[4]);
+	free(rcast->map);
 	exit(0);
 }
 
-void	load_hooks(t_screen *screen)
+void	load_hooks(t_simulation *rcast)
 {
-	mlx_loop_hook(screen->mlx, &render, screen);
-	mlx_hook(screen->window, 17, 0, &kill_screen, screen);
+	mlx_loop_hook(rcast->screen.mlx, &render, rcast);
+	mlx_hook(rcast->screen.window, 17, 0, &kill_screen, rcast);
 }
