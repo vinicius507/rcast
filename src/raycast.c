@@ -6,7 +6,7 @@
 /*   By: vgoncalv <vgoncalv@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 10:50:11 by vgoncalv          #+#    #+#             */
-/*   Updated: 2023/02/06 18:36:41 by vgoncalv         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:30:00 by vgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,54 @@ double	radians(double degree)
 	return (degree * M_PI / 180);
 }
 
+static double	cross_product(t_vector a, t_vector b)
+{
+	return ((a.x * b.y) - (b.y * a.x));
+}
+
+static t_vector	normalize(t_vector v)
+{
+	double	length;
+
+	length = sqrt(pow(v.x, 2) + pow(v.y, 2));
+	return ((t_vector){v.x / length, v.y / length});
+}
+
+static int	in_range(double n, double min, double max)
+{
+	n = n * 10.0 / 10.0;
+	if (max - min < 0.5)
+		printf("n: %.2f, [%.2f, %2.f]\r", n, min, max);
+	if ((n - min >= 0 && fabs(n - min) >= 0)
+		&& (n - max <= 0 && fabs(n - max) >= 0))
+		return (1);
+	return (0);
+}
+
+// TODO: make this work
 static int	get_hit_side(t_player *player, t_hit *hit, double ray_angle)
 {
-	t_point	wall_pos;
+	double		precision;
+	t_point		vertex[4];
 
-	wall_pos = (t_point){floor(hit->x), floor(hit->y)};
-	return (S_NO);
+	precision = 1. / RAY_PRECISION;
+	vertex[0] = (t_point){floor(hit->x), floor(hit->y)};
+	vertex[1] = (t_point){vertex[0].x + 1, vertex[0].y};
+	vertex[2] = (t_point){vertex[0].x + 1, vertex[0].y + 1};
+	vertex[3] = (t_point){vertex[0].x, vertex[0].y + 1};
+	if (in_range(hit->x, vertex[3].x, vertex[2].x)
+		&& fabs((double)vertex[2].y - hit->y) < precision)
+		return (S_NO);
+	if (in_range(hit->x, vertex[0].x, vertex[1].x)
+		&& fabs((double)vertex[1].y - hit->y) < precision)
+		return (S_SO);
+	if (in_range(hit->y, vertex[1].y, vertex[2].y)
+		&& fabs((double)vertex[1].x - hit->x) < precision)
+		return (S_WE);
+	if (in_range(hit->y, vertex[0].y, vertex[3].y)
+		&& fabs((double)vertex[0].x - hit->x) < precision)
+		return (S_EA);
+	return (-1);
 }
 
 static t_hit	raycast(t_simulation *rcast, double ray_angle)

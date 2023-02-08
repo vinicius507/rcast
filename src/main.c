@@ -6,7 +6,7 @@
 /*   By: vgoncalv <vgoncalv@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 22:28:06 by vgoncalv          #+#    #+#             */
-/*   Updated: 2023/02/06 18:23:18 by vgoncalv         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:23:34 by vgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static void	init_simulation(t_simulation *rcast)
 	rcast->map[9] = strdup("1111111111");
 	rcast->player.fov = 60;
 	rcast->player.fov = rcast->player.fov / 2;
-	rcast->player.angle = 0;
-	rcast->player.pos = (t_point){3, 3};
+	rcast->player.angle = 90;
+	rcast->player.pos = (t_point){4, 3};
 	rcast->screen = init_screen();
 	load_hooks(rcast);
 }

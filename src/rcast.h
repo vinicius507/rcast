@@ -6,7 +6,7 @@
 /*   By: vgoncalv <vgoncalv@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/05 22:27:45 by vgoncalv          #+#    #+#             */
-/*   Updated: 2023/02/06 17:58:39 by vgoncalv         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:37:31 by vgoncalv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define SCREEN_HALF_WIDTH 640
 # define SCREEN_HALF_HEIGHT 360
 
-# define RAY_PRECISION 64
+# define RAY_PRECISION 1024
 
 enum	e_sides
 {
@@ -54,7 +54,13 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
-typedef char	**t_map;
+typedef struct s_vector
+{
+	double	x;
+	double	y;
+}	t_vector;
+
+typedef char			**t_map;
 
 typedef struct s_player
 {
@@ -85,7 +91,7 @@ typedef struct s_hit
 	double	distance;
 }	t_hit;
 
-typedef int		t_color;
+typedef int				t_color;
 
 t_screen	init_screen(void);
 
